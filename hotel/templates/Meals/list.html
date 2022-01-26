@@ -1,3 +1,43 @@
-{% for meal in meal_list %}
-<h2><a href="{% url 'hotel:meal_detail' meal.slug %}">{{ meal }}</a></h2>
-{% endfor %}
+{% extends 'base.html' %}
+{% block body %}
+    <!-- ======= Menu Section ======= -->
+    <section id="menu" class="menu section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Menu</h2>
+          <p>Check Our Tasty Menu</p>
+        </div>
+
+        <div class="row" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-12 d-flex justify-content-center">
+            <ul id="menu-flters">
+              <li data-filter="*" class="filter-active">All</li>
+              <li data-filter=".filter-starters">Starters</li>
+              <li data-filter=".filter-salads">Salads</li>
+              <li data-filter=".filter-specialty">Specialty</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
+
+          {% for meal in meal_list %}
+          <div class="col-lg-6 menu-item filter-specialty">
+            <img src='{{ meal.image.url }}' class="menu-img" alt="">
+            <div class="menu-content">
+              <a href="{% url 'hotel:meal_detail' meal.slug %}">{{ meal.name }}</a><span>£{{ meal.price }}</span>
+            </div>
+            <div class="menu-ingredients">
+              {{ meal.description }}
+            </div>
+          </div>
+
+          {% endfor %}
+
+        </div>
+
+      </div>
+    </section><!-- End Menu Section -->
+
+    {% endblock body %}
