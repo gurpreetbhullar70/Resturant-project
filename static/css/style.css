@@ -685,6 +685,7 @@ section {
   font-weight: 700;
   font-family: "Playfair Display", serif;
   color: #cda45e;
+  
 }
 
 /*--------------------------------------------------------------
@@ -935,7 +936,9 @@ section {
 }
 
 .menu .menu-content::after {
-  content: "......................................................................" "...................................................................." "....................................................................";
+  content: "......................................................................"
+ "...................................................................."
+ "....................................................................";
   position: absolute;
   left: 20px;
   right: 0;
@@ -1456,7 +1459,7 @@ section {
 }
 
 .contact .php-email-form {
-  width: 100%;
+  width: 50%;
 }
 
 .contact .php-email-form .form-group {
@@ -1724,4 +1727,10 @@ section {
   text-align: center;
   font-size: 13px;
   color: #fff;
+}
+.image{
+  display: flex;
+  margin: auto;
+ justify-content: center;
+  width: 50% !important;
 }
