@@ -21,23 +21,20 @@
                     <div class="col-lg-12 d-flex justify-content-center">
                       
 
-                        <img class="imag" src="{{ meal_detail.image.url }}" alt="">  
-                       
-
+                        
+                        <img class="image" src="{{ meal_detail.image.url }}" alt="">  
+                        
+                        
+                        
                     </div>
-                  </div>
-          
-                  <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
-          
-                    <h2 class="imagess">{{ meal_detail }}</h2>
-                        <p>{{ meal_detail.description }}</p>
-                        <p>People :{{meal_detail.people}}</p>
-                        <p>Price :{{meal_detail.price }}</p>
-
-          
-                  </div>
-          
+                    <div class="text justify-content-center col-lg-12">
+                    <h1>{{ meal_detail }}</h1>
+                    <p>{{ meal_detail.description }}</p>
+                    <p>For : {{meal_detail.people}} People</p>
+                    <p>Price : £{{meal_detail.price }}</p>
                 </div>
+                </div>
+            </div>
               </section><!-- End Menu Section -->
           
               
