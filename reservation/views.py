@@ -13,3 +13,5 @@ def reserve_table(request):
             reserve_form.save() 
     context = {'form': reserve_form }
     return render(request, 'Reservation/reservation.html', context)
+            
+    
