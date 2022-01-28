@@ -1,6 +1,3 @@
-from operator import mod
-from tabnanny import verbose
-from unicodedata import category, name
 from django.db import models
 from django.utils.text import slugify
 # Create your models here.
