@@ -1,4 +1,6 @@
+from operator import mod
 from tabnanny import verbose
+from unicodedata import category, name
 from django.db import models
 from django.utils.text import slugify
 # Create your models here.
@@ -6,6 +8,7 @@ class Meals(models.Model):
     """ Customer information model """
     name = models.CharField(max_length=50)
     description = models.TextField(max_length=500)
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL, null=True)
     people = models.IntegerField()
     price = models.DecimalField(max_length=5, decimal_places=2, max_digits=5)
     image = models.ImageField(upload_to='hotel/')
@@ -22,6 +25,19 @@ class Meals(models.Model):
         
         
 
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=30)
+    
+    
+    class Meta:
+        verbose_name = 'category'
+        verbose_name_plural = 'categories'
+    
+    
     def __str__(self):
         return self.name
     
