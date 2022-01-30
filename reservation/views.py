@@ -7,7 +7,6 @@ from reservation.models import Reservation
 
 def reserve_table(request):
     reserve_form = ReserveTableForm()
-    
     if request.method == 'POST':
         reserve_form = ReserveTableForm(request.POST)
         
