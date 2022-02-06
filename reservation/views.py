@@ -1,7 +1,8 @@
 from .models import Reservation
 from django.shortcuts import render
 from .forms import ReserveTableForm
-
+from django.http import  HttpResponseRedirect
+from django.contrib import messages
 
 from reservation.models import Reservation
 
@@ -12,6 +13,10 @@ def reserve_table(request):
         
         if reserve_form.is_valid():
             reserve_form.save() 
+            
+            messages.add_message(request, messages.SUCCESS, f" hello ")
+
+        return HttpResponseRedirect('/reserve_table/')
             
     context = {'form': reserve_form }
     

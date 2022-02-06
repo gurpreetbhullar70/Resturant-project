@@ -7,9 +7,13 @@
     <div class="container" data-aos="fade-up">
 
       <div class="section-title">
+        
         <h2>Reservation</h2>
         <p>Book a Table</p>
+        
       </div>
+
+      
       {% comment %}
       
       <!-- <form action="" method="POST" role="form" class="php-email-form" data-aos="fade-up" data-aos-delay="100">
@@ -52,6 +56,20 @@
       </form> -->
       {% endcomment %}
        
+      
+      {% for message in messages %}
+      <center>
+        <div class="alert alert-success" role="alert">
+          <h4 class="alert-heading">Thank you!</h4>
+        <h5>Your table booking done successfully and we will respond shortly...</h5>
+        
+        
+      </div>
+      </center>
+        <br>
+        <br>
+      {% endfor %}
+     
       
         <form action="" method="POST" role="form" data-aos="fade-up" data-aos-delay="100">
         {% csrf_token %} 
