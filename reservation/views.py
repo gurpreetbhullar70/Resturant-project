@@ -17,9 +17,11 @@ def reserve_table(request):
             messages.add_message(request, messages.SUCCESS, f" hello ")
 
         return HttpResponseRedirect('/reserve_table/')
-            
-    context = {'form': reserve_form }
-    
-    return render(request, 'Reservation/reservation.html', context)
-            
-    
+    else:
+                
+        
+        context = {'form': reserve_form }
+        
+        return render(request, 'Reservation/reservation.html', context)
+                
+        

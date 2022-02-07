@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap5 %}
 {% block body %}
 
   <!-- ======= Contact Section ======= -->
@@ -17,7 +18,7 @@
         {% for message in messages %}
           
           <center>
-          <div class="alert alert-success" role="alert">
+          <div class="alert alert-success alert-dismissible fade show" role="alert" id="msg">
           <h3>Thank you {{ message }}!</h3>
           <h5>We received your email and will respond shortly...</h5>
         </div>
@@ -73,18 +74,17 @@
           <div class="col-lg-8 mt-5 mt-lg-0">
             
 
-            <form action="/contact/" method="POST" role="form">
-              <div class="row">
+            <form action="{% url 'contact:send_email' %}" method="POST" role="form">
+              <!-- <div class="row"> -->
                 
                 <div class="col-md-6 form-group mt-3 mt-md-0">
                   {% csrf_token %}
-                  {{form.as_p}}
-                 
-                  <div class="text-center">
-                    <button type="submit">Send Message</button>
-                  </div>
+                  {% bootstrap_form form %}
+                  {% buttons %}
+                      <button type="submit" class="btn btn-warning">Send Message</button>
+                  {% endbuttons %}
                 </div>
-              </div>
+              <!-- </div> -->
       
             </form>
             

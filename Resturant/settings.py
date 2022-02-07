@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'reservation',
     'aboutus',
     'contact',
+    'home',
+    'bootstrap5',
     
 ]
 
