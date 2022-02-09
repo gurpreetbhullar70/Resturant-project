@@ -1,11 +1,11 @@
 from django.forms import ModelForm 
-from .models import Reservation, Customer
+from .models import Reservation
 
 
-# class DateInput(forms.DateInput):
+# class DateInput(ModelForm .DateInput):
 #     input_type = 'date'
 
-# class TimeInput(forms.TimeInput):
+# class TimeInput(ModelForm .TimeInput):
 #     input_type = 'time'
 
 class ReservationForm(ModelForm):
@@ -13,8 +13,8 @@ class ReservationForm(ModelForm):
     # email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Your email'}))
     # phone = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Your phone'}))
     # number_of_persons = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Number of persons'}))
-    # date = forms.DateField(widget=DateInput)
-    # time = forms.TimeField(widget=TimeInput)
+    # date = ModelForm.DateField(widget=DateInput)
+    # time = ModelForm.TimeField(widget=TimeInput)
     class Meta:
         model = Reservation
         fields = ['name', 'email','persons', 'time', 'date', 'phone']
