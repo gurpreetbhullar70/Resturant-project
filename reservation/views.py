@@ -1,27 +1,87 @@
-from .models import Reservation
-from django.shortcuts import render
-from .forms import ReserveTableForm
-from django.http import  HttpResponseRedirect
-from django.contrib import messages
-
-from reservation.models import Reservation
+from django.shortcuts import render,redirect
+from django.http import  HttpResponse
+import reservation
+from .models import *
+from .forms import ReservationForm
 
 def reserve_table(request):
-    reserve_form = ReserveTableForm()
-    if request.method == 'POST':
-        reserve_form = ReserveTableForm(request.POST)
+    orders = Reservation.objects.all()
+    customers = Customer.objects.all()
+    
+    context = {
+        'orders' : orders,
+        'customers' : customers,
         
-        if reserve_form.is_valid():
-            reserve_form.save() 
-            
-            messages.add_message(request, messages.SUCCESS, f" hello ")
+    }
+    
+    
+    return render(request, 'Reservation/reservation.html', context)
 
-        return HttpResponseRedirect('/reserve_table/')
-    else:
-                
+
+
+    
+
+
         
-        context = {'form': reserve_form }
+def customer_table(request, pk):
+    
+    
+    pp = Reservation.objects.filter(id=pk)
+    
+    
+    
+    context = {
         
-        return render(request, 'Reservation/reservation.html', context)
-                
+        'pp' : pp,
         
+        }
+    return render(request, 'Reservation/view_reservation.html', context)
+        
+
+    
+def create_order(request):
+    form = ReservationForm()
+    if request.method == 'POST':
+        
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/reserve_table/')
+        
+    
+    context = {
+        'form' : form,
+    }
+    return render(request, 'Reservation/create_reservation.html', context)
+
+
+
+def update_order(request, pk):
+    
+    order = Reservation.objects.get(id=pk)
+    form = ReservationForm(instance=order)
+    if request.method == 'POST':
+        form = ReservationForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('/reserve_table/')
+    context = {
+        'form' : form,
+    }
+    return render(request, 'Reservation/update_reservation.html', context)
+
+
+
+def delete_order(request, pk):
+    order = Reservation.objects.get(id=pk)
+    if request.method == 'POST':
+        order.delete()
+        return redirect('/reserve_table/')
+    context = {
+        'item' : order,
+        
+    }
+    return render(request, 'Reservation/delete_reservation.html', context)
+    
+
+    

@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load bootstrap5 %}
 {% block body %}
 
  <!-- ======= Book A Table Section ======= -->
@@ -9,74 +10,61 @@
       <div class="section-title">
         
         <h2>Reservation</h2>
-        <p>Your Booking</p>
-        <a href="{% url 'reservation:create_order' %}">Create order</a>
+        <p>Update Your Booking</p>
 
-      
 
-        <table class="table">
+
+        <!-- <table class="table">
           
             <tr class="table-primary">
               <th scope="col">Id</th>
               <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Persons</th>
+              <th scope="col">Guest</th>
               <th scope="col">Time</th>
               <th scope="col">Date</th>
-              <th scope="col">Phone</th>
-              <th scope="col">View</th>
+              <th scope="col">Status</th>
               <th scope="col">Update</th>
               <th scope="col">Delete</th>
-              
-              
-              
             </tr>
-            {% for reserve in orders %}
-            
-            
-            
-            
+            {% for res in pp %}
+         
+          
             <tr class="table-success">
-              
-              
-              
-              <th scope="row">{{reserve.id}}</th>
-              <td>{{reserve.name}}</td>
-              <td>{{reserve.email}}</td> 
-              <td>{{reserve.persons}}</td>
-              <td>{{reserve.time}}</td>
-              <td>{{reserve.date}}</td>
-              <td>{{reserve.phone}}</td>
-              
-              
-              
-              <td><a href="{% url 'reservation:customer_table' reserve.id%}">view</a></td>
-              
-              <td><a href="{% url 'reservation:update_order' reserve.id%}">Update</a></td> 
-              <td><a href="{% url 'reservation:delete_order' reserve.id%}">Delete</a></td> 
-              
+              <th scope="row">{{res.id}}</th>
+              <td>{{res.customer}}</td>
+              <td>{{res.persons}}</td>
+              <td>{{res.time}}</td>
+              <td>{{res.date}}</td> 
+              <td>{{res.status}}</td> 
+              <td><a href="">Update</a></td> 
+              <td><a href="">View</a></td> 
+              <td><a href="">Delete</a></td> 
               
               
             </tr>
-            
             {% endfor %}
-            
-            
            
           
         </table>
-        
+         -->
       </div>
 
       
      
+      <form action="" method="POST" role="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        {% endbuttons %}
+       
+     </form> 
       
       <!-- {% for messagess in messages %}
       <center>
         <div class="alert alert-success" role="alert" id="msg">
           <h4 class="alert-heading">Thank you!</h4>
         <h5>Your table booking done successfully and we will respond shortly...</h5>
-        
         
       </div>
       </center>
@@ -85,7 +73,9 @@
       {% endfor %} -->
      
       
-       
+      
+          
+     
         
     </div>
   </section>
