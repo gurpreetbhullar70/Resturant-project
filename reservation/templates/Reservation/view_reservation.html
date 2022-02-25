@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block body %}
+{% block content %}
 
  <!-- ======= Book A Table Section ======= -->
  <section id="book-a-table" class="book-a-table">
@@ -10,19 +10,27 @@
         
         <h2>Reservation</h2>
         <p>Your Booking</p>
-
+        {% for message in messages %}
+        <center>
+          <div class="alert alert-success" role="alert" id="msg">
+            <h4 class="alert-heading">{{message}}</h4>
+          
+          
+          
+        </div>
+        </center>
+          <br>
+          <br>
+      {% endfor %}  
 
 
         <table class="table">
           
             <tr class="table-primary">
               <th scope="col">Id</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
               <th scope="col">People</th>
               <th scope="col">Time</th>
               <th scope="col">Date</th>
-              <th scope="col">Phone</th>
               <th scope="col">Go Back</th>
               <th scope="col">Update</th>
               <th scope="col">Delete</th>
@@ -32,12 +40,9 @@
           
             <tr class="table-success">
               <th scope="row">{{res.id}}</th>
-              <td>{{res.name}}</td>
-              <td>{{res.email}}</td> 
               <td>{{res.persons}}</td>
               <td>{{res.time}}</td>
               <td>{{res.date}}</td> 
-              <td>{{res.phone}}</td>
               <td><a class="btn btn-info" href="{% url 'reservation:reserve_table' %}">Go Back</a></td> 
               <td><a class="btn btn-success" href="{% url 'reservation:update_order' res.id%}">Update</a></td> 
               <td><a class="btn btn-danger" href="{% url 'reservation:delete_order' res.id%}">Delete</a></td> 
@@ -82,4 +87,4 @@
   <!-- End Book A Table Section -->
   
 
-{% endblock body %}
+{% endblock content %}

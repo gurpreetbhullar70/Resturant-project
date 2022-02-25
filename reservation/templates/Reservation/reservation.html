@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block body %}
+{% block content %}
 
  <!-- ======= Book A Table Section ======= -->
  <section id="book-a-table" class="book-a-table">
@@ -17,12 +17,12 @@
           
           <tr class="table-primary">
             <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
+            {% comment %} <th scope="col">Name</th>
+            <th scope="col">Email</th> {% endcomment %}
             <th scope="col">Persons</th>
             <th scope="col">Time</th>
             <th scope="col">Date</th>
-            <th scope="col">Phone</th>
+            {% comment %} <th scope="col">Phone</th> {% endcomment %}
             <th scope="col">Status</th>
             <th scope="col">View</th>
             <th scope="col">Update</th>
@@ -43,12 +43,12 @@
               
               
               <th scope="row">{{reserve.id}}</th>
-              <td>{{reserve.name}}</td>
-              <td>{{reserve.email}}</td> 
+              {% comment %} <td>{{reserve.name}}</td>
+              <td>{{reserve.email}}</td>  {% endcomment %}
               <td>{{reserve.persons}}</td>
               <td>{{reserve.time}}</td>
               <td>{{reserve.date}}</td>
-              <td>{{reserve.phone}}</td>
+              {% comment %} <td>{{reserve.phone}}</td> {% endcomment %}
               <td>{{reserve.status}}</td>
               
               
@@ -95,4 +95,4 @@
   <!-- End Book A Table Section -->
   
 
-{% endblock body %}
+{% endblock content %}

@@ -1,21 +1,41 @@
-from django.forms import ModelForm 
-from .models import Reservation
+#from django.forms import ModelForm 
+from django import forms
+from .models import Reservation, Customer
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.conf import settings
 
 
-# class DateInput(ModelForm .DateInput):
-#     input_type = 'date'
 
-# class TimeInput(ModelForm .TimeInput):
-#     input_type = 'time'
+class DateInput(forms.DateInput):
+    input_type = 'date'
 
-class ReservationForm(ModelForm):
-    # name = forms.CharField(max_length=50, widget=forms.TextInput(attrs={'placeholder': 'Your name'}))
-    # email = forms.EmailField(widget=forms.EmailInput(attrs={'placeholder': 'Your email'}))
-    # phone = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Your phone'}))
-    # number_of_persons = forms.IntegerField(widget=forms.NumberInput(attrs={'placeholder': 'Number of persons'}))
-    # date = ModelForm.DateField(widget=DateInput)
-    # time = ModelForm.TimeField(widget=TimeInput)
+
+
+class CustomerForm(forms.ModelForm):
+    
+    phone = forms.CharField(widget=forms.TextInput(
+    attrs={'placeholder': ('Please enter in +44 format')}))
+
+    class Meta:
+        model = Customer
+        fields = ('name', 'email', 'phone')
+
+
+
+
+class ReservationForm(forms.ModelForm):
+    
+    date = forms.DateField(widget=DateInput)
     class Meta:
         model = Reservation
-        fields = ['name', 'email','persons', 'time', 'date', 'phone']
+        fields = ('persons', 'time', 'date')
          
+
+
+
+
+class CreateUserForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', ]

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap5 %}
+{% block content %}
+
+<h3>hello</h3>
+<table class="table">
+          
+    <tr class="table-primary">
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">People</th>
+      <th scope="col">Time</th>
+      <th scope="col">Date</th>
+      <th scope="col">Go Back</th>
+      <th scope="col">Update</th>
+      <th scope="col">Delete</th>
+    </tr>
+    {% for res in order %}
+ 
+  
+    <tr class="table-success">
+      <th scope="row">{{user.username}}</th>
+      <th scope="row">{{res.id}}</th>
+      <td>{{res.name}}</td> 
+      <td>{{res.reservation.persons}}</td>
+      <td>{{res.reservation.time}}</td>
+      <td>{{res.reservation.date}}</td> 
+      <td><a class="btn btn-info" href="{% url 'reservation:reserve_table' %}">Go Back</a></td> 
+      <td><a class="btn btn-success" href="{% url 'reservation:update_order' res.id%}">Update</a></td> 
+      <td><a class="btn btn-danger" href="{% url 'reservation:delete_order' res.id%}">Delete</a></td> 
+      
+      
+    </tr>
+    {% endfor %}
+   {{order}}
+   {{user.id}}
+</table>
+
+
+
+
+{% endblock content %}

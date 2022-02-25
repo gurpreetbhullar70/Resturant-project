@@ -1,12 +1,13 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load bootstrap5 %}
-{% block body %}
+{% block content %}
+
 
  <!-- ======= Book A Table Section ======= -->
  <section id="book-a-table" class="book-a-table">
     <div class="container" data-aos="fade-up">
-
+      
       <div class="section-title">
         
         <h2>Reservation</h2>
@@ -16,24 +17,25 @@
       </div>
 
       
-     
+     {{errors}}
       
-      <!-- {% for messagess in messages %}
+     {% for message in messages %}
       <center>
         <div class="alert alert-success" role="alert" id="msg">
-          <h4 class="alert-heading">Thank you!</h4>
-        <h5>Your table booking done successfully and we will respond shortly...</h5>
+          <h4 class="alert-heading">{{message}}</h4>
+        
         
         
       </div>
       </center>
         <br>
         <br>
-      {% endfor %} -->
+    {% endfor %}  
      
       
         <form action="" method="POST" role="form">
             {% csrf_token %}
+            {% bootstrap_form customer_form %}
             {% bootstrap_form form %}
             {% buttons %}
                 <button type="submit" class="btn btn-primary">Submit</button>
@@ -41,9 +43,12 @@
           
         </form> 
         
+        
+        
+       
     </div>
   </section>
   <!-- End Book A Table Section -->
   
 
-{% endblock body %}
+{% endblock content %}

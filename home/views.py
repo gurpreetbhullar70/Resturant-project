@@ -4,8 +4,10 @@ from aboutus.models import AboutUs, Why_Choose_Us, Chef
 from contact.forms import ContactForm
 from django.contrib import messages
 # from reservation.models import Reservation
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url='/reserve_table/login')
 def home(request):
     about = AboutUs.objects.last()
     why_choose_us = Why_Choose_Us.objects.all()
