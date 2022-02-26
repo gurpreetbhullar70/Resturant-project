@@ -12,7 +12,9 @@
         
         <h2>Reservation</h2>
         <p>Book a Table</p>
-
+       
+        {% if user.is_authenticated %}
+      {{user.id}}
       
       </div>
 
@@ -32,17 +34,28 @@
         <br>
     {% endfor %}  
      
+      {% if submitted %}
+      Your Venue was Submitted
+
+      {% else %}
+
+      <form action="" method="POST" role="form">
+        {% csrf_token %}
+        {% bootstrap_form customer_form %}
+        {% bootstrap_form form %}
+        {% buttons %}
+            <button type="submit" class="btn btn-primary">Submit</button>
+        {% endbuttons %}
       
-        <form action="" method="POST" role="form">
-            {% csrf_token %}
-            {% bootstrap_form customer_form %}
-            {% bootstrap_form form %}
-            {% buttons %}
-                <button type="submit" class="btn btn-primary">Submit</button>
-            {% endbuttons %}
-          
-        </form> 
+    </form> 
+
+      {% endif %}
+
+      {% else %}
+      <h3>You must be logged in</h3>
+      <a href="{% url 'reservation:login' %}">Loggin</a>
         
+      {% endif %} 
         
         
        

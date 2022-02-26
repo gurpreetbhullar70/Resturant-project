@@ -10,16 +10,18 @@
         
         <h2>Reservation</h2>
         <p>Your Booking</p>
-        
-        
-        
+        {% if user.is_authenticated %}
+        {{user.username}}
+        {{orders.customer.name}}
         <table class="table">
           
           <tr class="table-primary">
             <th scope="col">Id</th>
+            
+            <th scope="col">persons</th>
             {% comment %} <th scope="col">Name</th>
             <th scope="col">Email</th> {% endcomment %}
-            <th scope="col">Persons</th>
+            
             <th scope="col">Time</th>
             <th scope="col">Date</th>
             {% comment %} <th scope="col">Phone</th> {% endcomment %}
@@ -30,7 +32,7 @@
             <th scope="col">Book new table</th>
             
               
-              
+              hello{{orders.persons}}
               
             </tr>
             {% for reserve in orders %}
@@ -43,9 +45,11 @@
               
               
               <th scope="row">{{reserve.id}}</th>
+              
+              <th scope="row">{{reserve.persons}}</th>
               {% comment %} <td>{{reserve.name}}</td>
               <td>{{reserve.email}}</td>  {% endcomment %}
-              <td>{{reserve.persons}}</td>
+              
               <td>{{reserve.time}}</td>
               <td>{{reserve.date}}</td>
               {% comment %} <td>{{reserve.phone}}</td> {% endcomment %}
@@ -61,15 +65,18 @@
               
               
             </tr>
-            
             {% endfor %}
             
             
-           
+            
+            
+          </table>
           
-        </table>
-        
-      </div>
+        </div>
+        {% else %}
+        <h3>You must be logged in</h3>
+        <a href="{% url 'reservation:login' %}">Loggin</a>
+        {% endif %}
 
       
      

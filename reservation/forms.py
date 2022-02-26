@@ -1,4 +1,5 @@
 #from django.forms import ModelForm 
+import email
 from django import forms
 from .models import Reservation, Customer
 from django.contrib.auth.forms import UserCreationForm
@@ -36,6 +37,9 @@ class ReservationForm(forms.ModelForm):
 
 
 class CreateUserForm(UserCreationForm):
+    email = forms.EmailField()
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', ]
+        fields = ['username', 'first_name', 'last_name', 'email', 'password1','password2' ]

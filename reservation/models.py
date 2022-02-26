@@ -26,11 +26,12 @@ time_choices = (
 
 
 class Customer(models.Model):
-   
+    
+    
     name = models.CharField(max_length=50, null=True)
     email = models.EmailField(default='')
     phone = models.CharField(max_length=13, default='')
-    owner = models.IntegerField(blank=False,default=1)
+    owner = models.IntegerField(blank=False, default=1)
     
     def __str__(self):
         return self.name
@@ -60,17 +61,17 @@ class Reservation(models.Model):
     
     
     
-    manger = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, null=True, on_delete=models.CASCADE)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="customer", null=True)
+    table = models.ForeignKey(Table, on_delete=models.CASCADE, related_name="table_booked",null=True)
     guests_choices = ((1, "1 person"), (2, "2 people"),
                       (3, "3 people"), (4, "4 people"))
     persons = models.IntegerField(choices=guests_choices, default=1)
     date = models.DateField(default='2022-01-28')
     time = models.CharField(max_length=10, choices=time_choices, default='12:00')
-    table = models.ForeignKey(Table, on_delete=models.CASCADE, related_name="table_booked",null=True)
     status = models.CharField(max_length=200, null=True, choices=STATUS, default='pending')
    
     def __str__(self):
-        return str(self.persons)
+        return str(self.time)
 
 

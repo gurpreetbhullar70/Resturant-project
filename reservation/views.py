@@ -13,7 +13,7 @@ from .models import Table, Customer, Reservation
 from django.conf import settings
 from django.views import View
 from django.contrib.auth.decorators import login_required
-from .decorators import unauthenticated_user, allowed_users,admin_only
+from .decorators import allowed_users
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
@@ -26,15 +26,22 @@ def registerPage(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            username = form.cleaned_data.get('username')
+            #user = form.save(commit=False)
+            form.save()
+            #user.save()
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password1']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
             
-            group = Group.objects.get(name='customer')
-            user.groups.add(group)
             
-            messages.success(request, 'Account was created for ' + username)
+            messages.success(request, 'Account was created for ')
             
             return redirect('/reserve_table/login')
+        else:
+            form = CreateUserForm()
+            
             
     context = {
         'form' : form,
@@ -45,8 +52,8 @@ def registerPage(request):
 #@unauthenticated_user
 def loginPage(request):
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST['username']
+        password = request.POST['password']
         
         user = authenticate(request, username=username, password=password)
         if user is not None:
@@ -63,8 +70,37 @@ def loginPage(request):
 
 def logoutUser(request):
     logout(request)
-    return redirect('/reserve_table/login')
+    return redirect('/')
 
+
+
+
+
+def check_availabilty(customer_requested_time, customer_requested_date):
+    """ check availability against Reservation model using customer input """
+
+    # Check to see how many bookings exist at that time/date
+    no_tables_booked = len(Reservation.objects.filter(
+        requested_time=customer_requested_time,
+        requested_date=customer_requested_date, status="confirmed"))
+
+    # Return number of tables
+    return no_tables_booked
+
+
+def get_customer_instance(request, User):
+    """ Returns customer instance if User is logged in """
+    customer_email = request.user.email
+    customer = Customer.objects.filter(email=customer_email).first()
+
+    return customer
+
+
+def get_tables_info():
+    """ Retrieves the number of tables in the table model """
+    max_tables = len(Table.objects.all())
+
+    return max_tables
 
 
 
@@ -116,7 +152,7 @@ def get_tables_info():
 
 
 @login_required(login_url='/reserve_table/login')
-@allowed_users(allowed_roles=['customer'])
+#@allowed_users(allowed_roles=['customer'])
 def create_order(request, User=User, *args, **kwargs):
     
     form = ReservationForm()
@@ -163,22 +199,10 @@ def create_order(request, User=User, *args, **kwargs):
 
             else:
                
-                    customer_formss=customer_form.save(commit=False)
-                    customer_formss.manger = request.user
-                    customer_formss.save()
-
-                # Retreive customer information to pass to reservation model
-              
-
-                    reservations = form.save(commit=False)
-                    
-                    # Pass formatted date & customer in to model
-                    reservations.date = date_formatted
-                    
-                
-                    #Save reservation
-                    form.save()
-
+                    venue = form.save(commit=False) 
+                    venue.user= request.user
+                    venue.save()
+                    customer_form.save()
                     messages.add_message(
                             request, messages.SUCCESS,
                             f"Thank you {customer_name}, your enquiry for "
@@ -189,6 +213,7 @@ def create_order(request, User=User, *args, **kwargs):
                     # Return blank forms so the same enquiry isn't sent twice.
                 
                     return HttpResponseRedirect('/reserve_table/create_order/')
+
 
 
     return render(request, 'Reservation/create_reservation.html',
@@ -202,11 +227,14 @@ def create_order(request, User=User, *args, **kwargs):
 
 
 
-@login_required(login_url='/reserve_table/login')
-@allowed_users(allowed_roles=['customer'])
-def userPage(request):
+# # @login_required(login_url='/reserve_table/login')
+# # #@allowed_users(allowed_roles=['customer'])
+# # def userPage(request):
     
-    order = Reservation.objects.filter(manger__id=request.user.id)
+# #     #user = request.user
+    
+# #     order = Reservation.objects.filter(customer__id =request.user.id)
+# #     print(order)
     
     
         
@@ -216,12 +244,12 @@ def userPage(request):
             
             
     
-    #customers = Reservation.objects.filter(customer__id=request.customer.id)
+#     #customers = Reservation.objects.filter(customer__id=request.customer.id)
     
-    print('ORDERS', order)
-    context = {}
-    context['order']=order
-    return render(request,'Reservation/users.html', context)
+#     print('ORDERS', order)
+#     context = {}
+#     context['order']=order
+#     return render(request,'Reservation/users.html', context)
 
 
 
@@ -273,8 +301,9 @@ def userPage(request):
 
 
 
-
+#@login_required(login_url='/reserve_table/login')
 # def create_order(request):
+#     submitted = False
 #     form = ReservationForm()
 #     customer_form = CustomerForm()
 #     if request.method == 'POST':
@@ -282,16 +311,23 @@ def userPage(request):
 #         form = ReservationForm(request.POST)
 #         customer_form = CustomerForm(request.POST)
 #         if form.is_valid() and customer_form.is_valid():
+#             venue = form.save(commit=False) 
+#             venue.user= request.user
+#             venue.save()
+#             form.save()
+#             #customer_form.save()
+#             return HttpResponseRedirect('/reserve_table/create_order/?submitted=True')
+#     else:
+#         form = ReservationForm
+#         customer_form = CustomerForm
+#         if 'submitted' in request.GET:
+#             submitted = True
            
-                        
-            
-#             form.save() and customer_form.save()
-#             return redirect('/reserve_table/')
-        
     
 #     context = {
 #         'form' : form,
 #         'customer_form': customer_form,
+#         'submitted':submitted,
 #     }
 #     return render(request, 'Reservation/create_reservation.html', context)
 
@@ -316,15 +352,23 @@ def userPage(request):
 
 
 
-@login_required(login_url='/reserve_table/login')
-@admin_only
+#@login_required(login_url='/reserve_table/login')
+#@admin_only
 def reserve_table(request):
     
- 
-    orders = Reservation.objects.all()
-    customers = Customer.objects.all()
+   
+        
+        
+      
+    orders = request.user.reservation_set.all().order_by('-id')
+
+
     
 
+    customers = Customer.objects.all()
+    print('my booking',orders)
+
+        
     context = {
         'orders' : orders,
         'customers' : customers,
