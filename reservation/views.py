@@ -1,11 +1,11 @@
 from email import message
 from multiprocessing import context
-from django.shortcuts import render, get_object_or_404, redirect,reverse
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import  HttpResponse,HttpResponseRedirect
 import reservation
 from .models import *
 from .forms import ReservationForm, CustomerForm, CreateUserForm
-import datetime
+from datetime import datetime
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
@@ -17,7 +17,7 @@ from .decorators import allowed_users
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import Group
+# from django.contrib.auth.models import Group
 
 #@unauthenticated_user
 def registerPage(request):
@@ -76,31 +76,31 @@ def logoutUser(request):
 
 
 
-def check_availabilty(customer_requested_time, customer_requested_date):
-    """ check availability against Reservation model using customer input """
+# def check_availabilty(customer_requested_time, customer_requested_date):
+#     """ check availability against Reservation model using customer input """
 
-    # Check to see how many bookings exist at that time/date
-    no_tables_booked = len(Reservation.objects.filter(
-        requested_time=customer_requested_time,
-        requested_date=customer_requested_date, status="confirmed"))
+#     # Check to see how many bookings exist at that time/date
+#     no_tables_booked = len(Reservation.objects.filter(
+#         requested_time=customer_requested_time,
+#         requested_date=customer_requested_date, status="confirmed"))
 
-    # Return number of tables
-    return no_tables_booked
-
-
-def get_customer_instance(request, User):
-    """ Returns customer instance if User is logged in """
-    customer_email = request.user.email
-    customer = Customer.objects.filter(email=customer_email).first()
-
-    return customer
+#     # Return number of tables
+#     return no_tables_booked
 
 
-def get_tables_info():
-    """ Retrieves the number of tables in the table model """
-    max_tables = len(Table.objects.all())
+# def get_customer_instance(request, User):
+#     """ Returns customer instance if User is logged in """
+#     customer_email = request.user.email
+#     customer = Customer.objects.filter(email=customer_email).first()
 
-    return max_tables
+#     return customer
+
+
+# def get_tables_info():
+#     """ Retrieves the number of tables in the table model """
+#     max_tables = len(Table.objects.all())
+
+#     return max_tables
 
 
 
@@ -125,12 +125,12 @@ def check_availabilty(customer_requested_time, customer_requested_date):
 
 
 
-def get_customer_instance(request, User):
-    """ Returns customer instance if User is logged in """
-    customer_email = request.user.email
-    customer = Customer.objects.filter(email=customer_email).first()
+# def get_customer_instance(request, User):
+#     """ Returns customer instance if User is logged in """
+#     customer_email = request.user.email
+#     customer = Customer.objects.filter(email=customer_email).first()
 
-    return customer
+#     return customer
 
 
 
@@ -171,9 +171,11 @@ def create_order(request, User=User, *args, **kwargs):
             customer_name = request.POST.get('name')
 
             # Convert date in to format required by django
-            date_formatted =  date_formatted =  datetime.datetime.strptime(
-                    customer_requested_date, "%Y-%m-%d")
+            date_formatted = datetime.strptime(
+            customer_requested_date,'%Y-%m-%d')
 
+            
+           
             # Check to see how many bookings exist at that time/date
             tables_booked = check_availabilty(
                 customer_requested_time, date_formatted)
@@ -196,7 +198,7 @@ def create_order(request, User=User, *args, **kwargs):
                 return render(request, 'Reservation/create_reservation.html',
                                 {'customer_form': customer_form,
                                  'form': form})
-
+            
             else:
                
                     venue = form.save(commit=False) 
@@ -211,7 +213,7 @@ def create_order(request, User=User, *args, **kwargs):
                             f"{customer_requested_date} has been sent.")
 
                     # Return blank forms so the same enquiry isn't sent twice.
-                
+                   
                     return HttpResponseRedirect('/reserve_table/create_order/')
 
 
@@ -285,13 +287,6 @@ def create_order(request, User=User, *args, **kwargs):
 
 
 
-# def validate_date(request, reservations):
-#     today = datetime.datetime.now().date()
-#     for reservation in reservations:
-#         if reservation['date'] < today:
-#             reservation['status'] = 'expired'
-
-#         return reservations
 
 
 
@@ -350,23 +345,41 @@ def create_order(request, User=User, *args, **kwargs):
 
 
 
-
-
 #@login_required(login_url='/reserve_table/login')
 #@admin_only
+# def reserve_table(request):
+  
+#     orders = request.user.reservation_set.all().order_by('-id')
+
+#     customers = Customer.objects.all()
+#     print('my booking',orders)
+
+        
+#     context = {
+#         'orders' : orders,
+#         'customers' : customers,
+        
+#     }
+
+#     return render(request, 'Reservation/reservation.html', context)
+
+
+
+
+
 def reserve_table(request):
-    
-   
-        
-        
-      
+  
     orders = request.user.reservation_set.all().order_by('-id')
-
-
-    
 
     customers = Customer.objects.all()
     print('my booking',orders)
+    
+    today = datetime.now().date()
+    for reservation in orders:
+        if reservation.date < today:
+            reservation.status = 'expired'
+            reservation.delete()
+
 
         
     context = {
@@ -375,13 +388,7 @@ def reserve_table(request):
         
     }
 
-
     return render(request, 'Reservation/reservation.html', context)
-
-
-
-
-
 
 
     
@@ -414,10 +421,10 @@ def customer_table(request, pk):
 
 
 def update_order(request, pk):
-    
     order = Reservation.objects.get(id=pk)
     form = ReservationForm(instance=order)
     if request.method == 'POST':
+      
         form = ReservationForm(request.POST, instance=order)
         if form.is_valid():
             form.save()
@@ -425,6 +432,7 @@ def update_order(request, pk):
             messages.add_message(request, messages.SUCCESS,f'thnx')
             
             return HttpResponseRedirect('/reserve_table/')
+        
     context = {
         'form' : form,
     }

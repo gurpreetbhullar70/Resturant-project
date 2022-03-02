@@ -1,20 +1,16 @@
-{% extends 'base.html' %}
-{% load static %}
-{% load bootstrap5 %}
+{% extends 'base.html' %} {% load static %} {% load bootstrap5 %} 
 {% block content %}
 
- <!-- ======= Book A Table Section ======= -->
- <section id="book-a-table" class="book-a-table">
-    <div class="container" data-aos="fade-up">
+<!-- ======= Book A Table Section ======= -->
+<section id="book-a-table" class="book-a-table">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title">
+      <h2>Reservation</h2>
+      <p>Update Your Booking</p>
 
-      <div class="section-title">
-        
-        <h2>Reservation</h2>
-        <p>Update Your Booking</p>
+      {{order.user}}
 
-        {{order.user}}
-
-        <!-- <table class="table">
+      <!-- <table class="table">
           
             <tr class="table-primary">
               <th scope="col">Id</th>
@@ -47,39 +43,28 @@
           
         </table>
          -->
-      </div>
-
-      {% for messagess in messages %}
-      <center>
-        <div class="alert alert-success" role="alert" id="msg">
-          <h4 class="alert-heading">Thank you!</h4>
-        <h5>Your table booking done successfully and we will respond shortly...</h5>
-        
-      </div>
-      </center>
-        <br>
-        <br>
-      {% endfor %} 
-     
-      <form action="" method="POST" role="form">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        {% buttons %}
-            <button type="submit" class="btn btn-primary">Submit</button>
-        {% endbuttons %}
-       
-     </form> 
-      
-     
-     
-      
-      
-          
-     
-        
     </div>
-  </section>
-  <!-- End Book A Table Section -->
-  
+
+    {% for messagess in messages %}
+    <center>
+      <div class="alert alert-success" role="alert" id="msg">
+        <h4 class="alert-heading">Thank you!</h4>
+        <h5>
+          Your table booking done successfully and we will respond shortly...
+        </h5>
+      </div>
+    </center>
+    <br />
+    <br />
+    {% endfor %}
+
+    <form action="" method="POST" role="form">
+      {% csrf_token %} {% bootstrap_form form %} {% buttons %}
+      <button type="submit" class="btn btn-primary">Submit</button>
+      {% endbuttons %}
+    </form>
+  </div>
+</section>
+<!-- End Book A Table Section -->
 
 {% endblock content %}

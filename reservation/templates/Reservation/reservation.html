@@ -1,87 +1,150 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 
- <!-- ======= Book A Table Section ======= -->
- <section id="book-a-table" class="book-a-table">
-    <div class="container" data-aos="fade-up">
+<!-- ======= Book A Table Section ======= -->
+<section id="book-a-table" class="book-a-table">
+  <div class="container" data-aos="fade-up">
+    <div class="section-title">
+      <h2>Reservation</h2>
+      <p>Your Booking</p>
+      {% if user.is_authenticated %}
 
-      <div class="section-title">
+      <table class="table">
+        <tr class="table-primary">
+          {% for reserve in orders %}
+          <th scope="col">Id</th>
+         
+          <th scope="col">Guests</th>
+
+          <th scope="col">Time</th>
+          <th scope="col">Date</th>
+         
+          <th scope="col">Reservation Status</th>
+          <th scope="col">View</th>
+          <th scope="col">Update</th>
+          <th scope="col">Delete</th>
+          <th scope="col">Book new table</th>
+        </tr>
+
+        <tr class="table-success">
+          <th scope="row">{{reserve.id}}</th>
+
+          <td>{{reserve.persons}}</td>
+
+          <td>{{reserve.time}}</td>
+          <td>{{ reserve.date|date:"d/m/Y"}}</td>
+
+          {% if reserve.status == 'rejected' %}
+          
+          <td>{{ reserve.status }}</td>
+          <td>
+            <a
+              class="btn btn-secondary disabled"
+              href="{% url 'reservation:customer_table' reserve.id%}"
+              >view</a
+            >
+          </td>
+  
+          <td>
+            <a
+              class="btn btn-secondary disabled"
+              href="{% url 'reservation:update_order' reserve.id%}"
+              >Update</a
+            >
+          </td>
+          <td>
+            <a
+              class="btn btn-danger"
+              href="{% url 'reservation:delete_order' reserve.id%}"
+              >Delete</a
+            >
+          </td>
+          <td>
+            <a class="btn btn-secondary disabled" href="{% url 'reservation:create_order' %}"
+            >Book new table</a
+            >
+          </td>
+          
+         
+         
+          <!-- If reservation has been rejected -->
+          {% elif reserve.status == 'expired' %}
+         <td>{{ reserve.status }}</td>
+
+         <td>
+          <a
+            class="btn btn-secondary disabled"
+            href="{% url 'reservation:customer_table' reserve.id%}"
+            >view</a
+          >
+        </td>
+
+        <td>
+          <a
+            class="btn btn-secondary disabled"
+            href="{% url 'reservation:update_order' reserve.id%}"
+            >Update</a
+          >
+        </td>
+        <td>
+          <a
+            class="btn btn-secondary disabled"
+            href="{% url 'reservation:delete_order' reserve.id%}"
+            >Delete</a
+          >
+        </td>
+        <td>
+          <a class="btn btn-secondary disabled" href="{% url 'reservation:create_order' %}"
+          >Book new table</a
+          >
+        </td>
         
-        <h2>Reservation</h2>
-        <p>Your Booking</p>
-        {% if user.is_authenticated %}
-        {{user.username}}
-        {{orders.customer.name}}
-        <table class="table">
+         
+          <!-- For 'pending' or 'confirmed' -->
+          {% else %}
           
-          <tr class="table-primary">
-            <th scope="col">Id</th>
-            
-            <th scope="col">persons</th>
-            {% comment %} <th scope="col">Name</th>
-            <th scope="col">Email</th> {% endcomment %}
-            
-            <th scope="col">Time</th>
-            <th scope="col">Date</th>
-            {% comment %} <th scope="col">Phone</th> {% endcomment %}
-            <th scope="col">Status</th>
-            <th scope="col">View</th>
-            <th scope="col">Update</th>
-            <th scope="col">Delete</th>
-            <th scope="col">Book new table</th>
-            
-              
-              hello{{orders.persons}}
-              
-            </tr>
-            {% for reserve in orders %}
-            
-            
-            
-            
-            <tr class="table-success">
-              
-              
-              
-              <th scope="row">{{reserve.id}}</th>
-              
-              <th scope="row">{{reserve.persons}}</th>
-              {% comment %} <td>{{reserve.name}}</td>
-              <td>{{reserve.email}}</td>  {% endcomment %}
-              
-              <td>{{reserve.time}}</td>
-              <td>{{reserve.date}}</td>
-              {% comment %} <td>{{reserve.phone}}</td> {% endcomment %}
-              <td>{{reserve.status}}</td>
-              
-              
-              
-              <td><a class="btn btn-info" href="{% url 'reservation:customer_table' reserve.id%}">view</a></td>
-              
-              <td><a class="btn btn-success" href="{% url 'reservation:update_order' reserve.id%}">Update</a></td> 
-              <td><a class="btn btn-danger" href="{% url 'reservation:delete_order' reserve.id%}">Delete</a></td> 
-              <td><a class="btn btn-info" href="{% url 'reservation:create_order' %}">Book new table</a></td>
-              
-              
-            </tr>
-            {% endfor %}
-            
-            
-            
-            
-          </table>
           
-        </div>
-        {% else %}
-        <h3>You must be logged in</h3>
-        <a href="{% url 'reservation:login' %}">Loggin</a>
-        {% endif %}
 
-      
-     
-      
-      <!-- {% for messagess in messages %}
+          <td>{{reserve.status}}</td>
+
+       
+          <td>
+            <a
+              class="btn btn-info"
+              href="{% url 'reservation:customer_table' reserve.id%}"
+              >view Reservation</a
+            >
+          </td>
+
+          <td>
+            <a
+              class="btn btn-success"
+              href="{% url 'reservation:update_order' reserve.id%}"
+              >Update Reservation</a
+            >
+          </td>
+          <td>
+            <a
+              class="btn btn-danger"
+              href="{% url 'reservation:delete_order' reserve.id%}"
+              >Cancel Reservation</a
+            >
+          </td>
+          <td>
+            <a class="btn btn-info" href="{% url 'reservation:create_order' %}"
+            >Book new table</a
+            >
+          </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </table>
+    </div>
+    {% else %}
+    <h3>You must be logged in</h3>
+    <a href="{% url 'reservation:login' %}">Loggin</a>
+    {% endif %}
+
+    <!-- {% for messagess in messages %}
       <center>
         <div class="alert alert-success" role="alert" id="msg">
           <h4 class="alert-heading">Thank you!</h4>
@@ -93,13 +156,8 @@
         <br>
         <br>
       {% endfor %} -->
-     
-      
-       
-        
-    </div>
-  </section>
-  <!-- End Book A Table Section -->
-  
+  </div>
+</section>
+<!-- End Book A Table Section -->
 
 {% endblock content %}

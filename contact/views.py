@@ -4,6 +4,7 @@ from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from .forms import ContactForm
+from django.conf import settings
 # Create your views here.
 #from contact.models import Contact
 
