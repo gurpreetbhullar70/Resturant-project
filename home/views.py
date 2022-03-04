@@ -28,5 +28,9 @@ def home(request):
         'form' : form,
        
     }
-    # messages.add_message(request, messages.SUCCESS, f" ")
+   
     return render(request, 'home/home.html', context)
+
+
+
+

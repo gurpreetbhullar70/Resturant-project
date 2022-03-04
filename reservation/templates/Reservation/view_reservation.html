@@ -24,9 +24,9 @@
       {% endfor %}  
 
 
-        <table class="table">
+        <table class="table border-dark mt-4" style="background-color: #cda45e;">
           
-            <tr class="table-primary">
+            <tr class="text-white">
               <th scope="col">Id</th>
               <th scope="col">People</th>
               <th scope="col">Time</th>
@@ -38,14 +38,38 @@
             {% for res in pp %}
          
           
-            <tr class="table-success">
+            <tr class="bg-dark text-white border border-dark">
               <th scope="row">{{res.id}}</th>
               <td>{{res.persons}}</td>
               <td>{{res.time}}</td>
               <td>{{res.date}}</td> 
-              <td><a class="btn btn-info" href="{% url 'reservation:reserve_table' %}">Go Back</a></td> 
-              <td><a class="btn btn-success" href="{% url 'reservation:update_order' res.id%}">Update</a></td> 
-              <td><a class="btn btn-danger" href="{% url 'reservation:delete_order' res.id%}">Delete</a></td> 
+              <td>
+                
+
+                <div class="input-group-append">
+                  <a class="btn btn-primary" href="{% url 'reservation:reserve_table' %}">
+                      <span class="text-white h-100">
+                        <i class="fa fa-arrow-left"></i></i></span> Back </a>
+                    </div>
+              </td> 
+              <td>
+              
+
+                <div class="input-group-append">
+                  <a class="btn btn-success " href="{% url 'reservation:update_order' res.id%}">
+                      <span class="text-white h-100">
+                        <i class="fa fa-pen"></i></span> Edit </a>
+                    </div>
+
+                
+              </td> 
+              <td>
+                <div class="input-group-append">
+                  <a class="btn btn-danger " href="{% url 'reservation:delete_order' res.id%}">
+                      <span class="text-white h-100">
+                        <i class="fa fa-trash x-5"></i></span> Cancel </a>
+                    </div>
+              </td> 
               
               
             </tr>

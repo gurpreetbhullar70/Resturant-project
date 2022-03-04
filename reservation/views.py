@@ -26,9 +26,7 @@ def registerPage(request):
     if request.method == 'POST':
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            #user = form.save(commit=False)
             form.save()
-            #user.save()
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             user = authenticate(username=username, password=password)
@@ -36,11 +34,10 @@ def registerPage(request):
                 login(request, user)
             
             
-            messages.success(request, 'Account was created for ')
+            messages.success(request, 'Account has been created ')
             
-            return redirect('/reserve_table/login')
-        else:
-            form = CreateUserForm()
+            return redirect('/')
+        
             
             
     context = {
@@ -366,32 +363,39 @@ def create_order(request, User=User, *args, **kwargs):
 
 
 
-
+@login_required(login_url='/reserve_table/login')
 def reserve_table(request):
   
     orders = request.user.reservation_set.all().order_by('-id')
+    if len(orders) == 0:
+            # if no reservations
+            messages.add_message(
+                            request, messages.SUCCESS,
+                            f"Sorry, you don't have a any reserved table, please reserve here.")
 
-    customers = Customer.objects.all()
-    print('my booking',orders)
+            return HttpResponseRedirect('/reserve_table/create_order/')
+    else:
+        customers = Customer.objects.all()
+        print('my booking',orders)
+        
+        today = datetime.now().date()
+        for reservation in orders:
+            if reservation.date < today:
+                reservation.status = 'expired'
+                
+
+
+            
+        context = {
+            'orders' : orders,
+            'customers' : customers,
+            
+        }
+
+        return render(request, 'Reservation/reservation.html', context)
+
+
     
-    today = datetime.now().date()
-    for reservation in orders:
-        if reservation.date < today:
-            reservation.status = 'expired'
-            reservation.delete()
-
-
-        
-    context = {
-        'orders' : orders,
-        'customers' : customers,
-        
-    }
-
-    return render(request, 'Reservation/reservation.html', context)
-
-
-    
 
 
 
@@ -400,7 +404,7 @@ def reserve_table(request):
 
 
 
-        
+@login_required(login_url='/reserve_table/login')       
 def customer_table(request, pk):
     pp = Reservation.objects.filter(id=pk)
     
@@ -419,7 +423,7 @@ def customer_table(request, pk):
 
 
 
-
+@login_required(login_url='/reserve_table/login')
 def update_order(request, pk):
     order = Reservation.objects.get(id=pk)
     form = ReservationForm(instance=order)
@@ -429,7 +433,7 @@ def update_order(request, pk):
         if form.is_valid():
             form.save()
             
-            messages.add_message(request, messages.SUCCESS,f'thnx')
+            messages.add_message(request, messages.SUCCESS,f'Thnx, your booking successfully updated.')
             
             return HttpResponseRedirect('/reserve_table/')
         
@@ -444,11 +448,15 @@ def update_order(request, pk):
 
 
 
-
+@login_required(login_url='/reserve_table/login')
 def delete_order(request, pk):
     order = Reservation.objects.get(id=pk)
     if request.method == 'POST':
         order.delete()
+        
+        messages.add_message(
+                            request, messages.SUCCESS,
+                            f"Thanx, your booking successfully cancelled.")
         return redirect('/reserve_table/')
     context = {
         'item' : order,

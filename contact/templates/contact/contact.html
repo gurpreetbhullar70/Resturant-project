@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load bootstrap5 %}
 {% block content %}
 
   <!-- ======= Contact Section ======= -->
@@ -14,18 +13,17 @@
     <!-- {% if messages %} -->
     <div class="container" data-aos="fade-up">
       
-        <div class="section-title">
-        {% for message in messages %}
-          
-          <center>
-          <div class="alert alert-success alert-dismissible fade show" role="alert" id="msg">
-          <h3>Thank you {{ message }}!</h3>
-          <h5>We received your email and will respond shortly...</h5>
-        </div>
-        </center>
-        
-        {% endfor %}
+
+      <div class="input-group justify-content-center mb-4">
+        {% for message in messages  %} 
+        <div class="alert alert-success" id="msg">
+          <strong>{{ message }}</strong>
+          <strong>We received your email and will respond shortly...</strong>
       </div>
+      {% endfor %}
+      </div>
+
+      
     </div>
     <!-- {% else %}   -->
     <div data-aos="fade-up">
@@ -75,16 +73,35 @@
             
 
             <form action="{% url 'contact:send_email' %}" method="POST" role="form" >
-              <!-- <div class="row"> -->
+        
                 
                 <div class="col-md-6 form-group mt-3 mt-md-0">
                   {% csrf_token %}
-                  {% bootstrap_form form %}
-                  {% buttons %}
-                      <button type="submit" class="btn btn-warning">Send Message</button>
-                  {% endbuttons %}
+                  <div class="mb-3">
+
+                    {{form.name}}
+                  </div>
+                
+                  <div class="mb-3">
+                    {{form.email}}
+                  </div>
+
+                  <div class="mb-3">
+
+                    {{form.message}}
+                   
+                  </div>
+
+                  <div class="input-group mb-4 justify-content-center mt-4">
+                    <div class="input-group-append">
+                        <input type="submit" class="btn-lg btn-warning" value="Send Message" />
+                        
+                  
+                    </div>
+                    </div>
+        
                 </div>
-              <!-- </div> -->
+              
       
             </form>
             

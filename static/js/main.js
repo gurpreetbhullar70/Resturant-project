@@ -276,3 +276,63 @@
   });
 
 })()
+
+
+
+
+/* Message Alert */ 
+
+setTimeout(function () {
+  let messages = document.getElementById('msg');
+  let alert = new bootstrap.Alert(messages);
+  alert.close();
+}, 2500);
+
+
+
+/* Javascript for Register and Login form inputs*/
+
+let form_field1 = document.getElementById('id_username');
+let form_field2 = document.getElementById('id_first_name');
+let form_field3 = document.getElementById('id_last_name');
+let form_field4 = document.getElementById('id_email');
+let form_field5 = document.getElementById('id_password1');
+let form_field6 = document.getElementById('id_password2');
+let form_field7 = document.getElementById('id_name');
+
+
+form_field1.placeholder='Username..', form_field1.className += 'form-control text-white shadow-none'; 
+form_field1.style.borderColor='#625b4b',
+form_field1.style.backgroundColor='#0c0b09';
+
+form_field2.placeholder='Firstname..', form_field2.className += 'form-control text-white shadow-none';
+form_field2.style.borderColor='#625b4b',
+form_field2.style.backgroundColor='#0c0b09';
+
+form_field3.placeholder='Lastname..', form_field3.className += 'form-control text-white shadow-none';
+form_field3.style.borderColor='#625b4b',
+form_field3.style.backgroundColor='#0c0b09';
+
+form_field4.placeholder='Email..', form_field4.className += 'form-control text-white shadow-none';
+form_field4.style.borderColor='#625b4b',
+form_field4.style.backgroundColor='#0c0b09';
+
+form_field5.placeholder='Password..', form_field5.className += 'form-control text-white shadow-none';
+form_field5.style.borderColor='#625b4b',
+form_field5.style.backgroundColor='#0c0b09';
+
+form_field6.placeholder='Confirm..', form_field6.className += 'form-control text-white shadow-none';
+form_field6.style.borderColor='#625b4b',
+form_field6.style.backgroundColor='#0c0b09';
+
+
+form_field7.placeholder='Confirm..', form_field7.className += 'form-control text-white shadow-none';
+form_field7.style.borderColor='#625b4b',
+form_field7.style.backgroundColor='#0c0b09';
+
+
+
+
+
+
+

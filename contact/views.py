@@ -41,9 +41,7 @@ def send_email(request):
         return render(request, 'contact/contact.html', context)
     
     
-# def send_email(request):
-#     return redirect('send_email')
-         
+
         
                 
             

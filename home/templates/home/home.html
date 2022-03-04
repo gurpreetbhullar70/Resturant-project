@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
-{% load bootstrap5 %}
-{% block content %}
 
+{% block content %}
 
  
 <section id="about" class="about">
@@ -143,7 +142,8 @@
 
 
   <!-- ======= Book A Table Section ======= -->
- <section id="book-a-table" class="book-a-table">
+  <a href="{% url 'reservation:create_order' %}">
+ <section id="book-a-table" class="book-a-table section-bg">
     <div class="container" data-aos="fade-up">
 
       <div class="section-title">
@@ -152,15 +152,16 @@
         <p>Book a Table</p>
 
       </div>
-
-      <a href="{% url 'reservation:create_order' %}">
-        <img src="static\img\tableimage.jpg" alt="">
-      </a>
-     
+      <div class="d-flex justify-content-center text-info"><p>Please click here for book a table.</p></div>
+      <div class="d-flex justify-content-center">
+        <img class="col-lg-6" src="static\img\tableimage.jpg" alt="booking-table">
+      
+     </div>
       
       
     </div>
   </section>
+</a>
   <!-- End Book A Table Section -->
 
 
@@ -175,27 +176,16 @@
     <p>Contact Us</p>
   </div>
  </div>
-  <!-- {% if messages %} -->
-  <div class="container" data-aos="fade-up">
-    
-      <div class="section-title">
-      {% for message in messages %}
-        
-        <center>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <h3>Thank you {{ message }}!</h3>
-        <h5>We received your email and will respond shortly...</h5>
-      </div>
-      </center>
-      
-      {% endfor %}
-    </div>
-  </div>
-  <!-- {% else %}   -->
+  
+
+
+
+
+  
   <div data-aos="fade-up">
   <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.151771362912!2d-0.3782926836720516!3d51.51043151830169!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760d54c62777df%3A0x54f96cb1689f6a16!2sSouthall%20Broadway%20(Stop%20N)!5e0!3m2!1sen!2suk!4v1630595593008!5m2!1sen!2suk" frameborder="0" allowfullscreen></iframe>
   </div>
-  <!-- {% endif %}   -->
+  
     
     
     <div class="container" data-aos="fade-up">
@@ -236,23 +226,43 @@
         </div>
 
         <div class="col-lg-8 mt-5 mt-lg-0">
-          
+            
 
-          <form action="{% url 'contact:send_email' %}" method="POST" role="form">
-            <!-- <div class="row"> -->
+          <form action="{% url 'contact:send_email' %}" method="POST" role="form" >
+      
               
               <div class="col-md-6 form-group mt-3 mt-md-0">
                 {% csrf_token %}
-                {% bootstrap_form form %}
-                {% buttons %}
-                    <button type="submit" class="btn btn-warning">Send Message</button>
-                {% endbuttons %}
+                <div class="mb-3">
+
+                  {{form.name}}
+                </div>
+              
+                <div class="mb-3">
+                  {{form.email}}
+                </div>
+
+                <div class="mb-3">
+
+                  {{form.message}}
+                 
+                </div>
+
+                <div class="input-group mb-4 justify-content-center mt-4">
+                  <div class="input-group-append">
+                      <input type="submit" class="btn-lg btn-warning" value="Send Message" />
+                      
+                
+                  </div>
+                  </div>
+      
               </div>
-            <!-- </div> -->
+            
     
           </form>
           
         </div>
+        
         
       </div>
       
