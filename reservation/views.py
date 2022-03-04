@@ -370,7 +370,7 @@ def reserve_table(request):
     if len(orders) == 0:
             # if no reservations
             messages.add_message(
-                            request, messages.SUCCESS,
+                            request, messages.WARNING,
                             f"Sorry, you don't have a any reserved table, please reserve here.")
 
             return HttpResponseRedirect('/reserve_table/create_order/')
