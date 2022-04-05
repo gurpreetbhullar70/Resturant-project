@@ -1,5 +1,5 @@
 #from .models import Contact
-from django.shortcuts import render,redirect
+from django.shortcuts import render
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
@@ -18,12 +18,13 @@ def send_email(request):
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
-            
+            recipient_list = [settings.EMAIL_HOST_USER]
             send_mail(
-                name, 
-                message, 
-                email, 
-                ['admin@example.com']
+                'From: ' + name, 
+                'Message: ' + message, 
+                'To' + email, 
+                recipient_list,
+                ['preet@gmail.com'],
                 )
         
         
