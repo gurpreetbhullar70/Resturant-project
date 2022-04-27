@@ -427,10 +427,20 @@ def customer_table(request, pk):
 def update_order(request, pk):
     order = Reservation.objects.get(id=pk)
     form = ReservationForm(instance=order)
+  
+    
     if request.method == 'POST':
+        
       
+        
+        
         form = ReservationForm(request.POST, instance=order)
+      
+        
         if form.is_valid():
+            order.status='pending'
+            order.table=None
+            order.customer=None
             form.save()
             
             messages.add_message(request, messages.SUCCESS,f'Thnx, your booking successfully updated.')
@@ -439,6 +449,7 @@ def update_order(request, pk):
         
     context = {
         'form' : form,
+        
     }
     return render(request, 'Reservation/update_reservation.html', context)
 

@@ -1,3 +1,44 @@
+# Mochi Restaurant
+
+![Mochi Restaurant Images](assets/testing-file/am-i-responsive1.PNG)
+
+[View the live project here](https://mochi-restaurant.herokuapp.com)
+
+## Contents
+1. [Introduction](#Introduction)
+
+2. [User Experience](#User-Experience)
+
+3. [Target](#Target)
+
+4. [Design](#Design)
+
+5. [Features](#Features)
+
+6.  [Flowchart](#Flowchart)
+
+7. [Bugs](#Bugs)
+
+8. [Other Features](#Other-Features)
+
+9. [Features Left to Implement](#Feature-Left-to-Implement)
+
+10. [Technologies Used](#Technologies-Used)
+
+11. [Frameworks Libraries and Programs Used](#Frameworks-Libraries-and-Programs-Used)
+
+12. [Testing](#Testing)
+
+    - [Testings.md](assets/testing-file/testing.md)
+
+13. [Deployment](#Deployment)
+
+14. [Make a clone](#Make-a-clone)
+
+15. [Credit](#Credit)
+
+16. [Acknowledgements](#Acknowledgements)
+
 ## Introduction
 
 This is my 4th project at code institute.This is restaurant website designed to display to the customers and allow them to make a booking and edit,view and delete the booking.In this website customers need to login or register on the website for booking, otherwise they can't see any booking and the website will take them on login page.This website deployed on heroku.
@@ -13,12 +54,11 @@ This is my 4th project at code institute.This is restaurant website designed to 
 #### New users :
 
 * For new/potential user, I have included all the information about the restaurant on one page.
-* As an admin user, I can approve or reject any reservation requests so that I can manage the restaurant's bookings efficiently.
 * As a admin user, I can login website to the access the site's backend.
 * As a admin user, I can update,delete and accept or reject the reservation.
 * As a new/potential user, I can login or register on website to view or edit my bookings.
 * As a new/potential user, I can see Breakfat,Lunch and Dinner menu seprately.
-* As a new/potential user, I can request for reserve a table in the restaurant.
+
 
 #### Current Users :
 - As a current user, I can login my account.
@@ -46,7 +86,10 @@ In this website i used five apps:
 The menu, aboutus and reservation apps require databases to store information so I have built 8 custom models. 
 
 #### Menu
-In the menu app i created two models names Meals & Category, these are two models that provide all the information required to display the items as part of the restaurant's menu. Each item has a name, description, price and for how many people. 
+In the menu app i created two models names Meals & Category, these are two models that provide all the information required to display the items as part of the restaurant's menu. Each item has a name, description, price and for how many people.
+
+This model is following this flow diagram:
+![](/assets/readme-file/menu-diagram.png)
 
 #### Reservation
 There are 3 models in reservation app, Customer, Table & Reservation.These 3 models allow for customer details to be stored, reservation enquiries to be made & managed & also enable availability checks whilst the user is enquiring. 
@@ -55,37 +98,14 @@ For each reservation, there will be a customer & table assigned to it. The custo
 
 The tables model is used for checking the availablity of the tables in the resturant. This process used by backend admin user, Admin user checks if there is avaiable table in the restaurant then he accept user table request according to the avaliabilty.
 
+This model is following this flow diagram:
+![](/assets/readme-file/reservation-diagram.png)
+
 #### Aboutus
 There are 3 models in aboutus app, AboutUs, Why_Choose_Us and Chef. AboutUs model is used for display the history of the restaurant with image.Why_Choose_Us model is created for show the 3 blocks, One is to read about out staff, Second is to about fresh food and the last one is read about our food quality.Chef model is used for show the information about our chef with chef image, name and social accounts.
 
-The type of site structure I have chosen for my website is a hierarchical structure which is demonstrated in the image below. The information architecture was arranged like this to ensure a user friendly experience as well as smooth navigation between the pages.
-
-           # Image here
-
- #### Skeleton
- - I used [Figma](https://www.figma.com/file/CHXc92m6fwvkLuXmaUi6vf/Untitled?node-id=0%3A1) Wireframe to Attach the following pages. To convience user to use this website:
-
-#### Home-Page
- ![](assets/readme-file/Capture.PNG)
-
-  #### About-Page
- ![](assets/readme-file/Capture6.PNG)
-
-  #### Menu-Page
- ![](assets/readme-file/Capture7.PNG)
-
-  #### Your-booking-Page
- ![](assets/readme-file/Capture9.PNG)
-
-  #### Contact-Page
- ![](assets/readme-file/Capture8.PNG)
-
- #### Register-Page
- ![](assets/readme-file/Capture8.PNG)
-
- #### Login-Page
- ![](assets/readme-file/Capture8.PNG)
-
+This model is following this flow diagram:
+![](/assets/readme-file/aboutus-diagram.png)
 
  ## Design
 
@@ -106,6 +126,9 @@ The type of site structure I have chosen for my website is a hierarchical struct
 * Image is downloaded free from the [pexels](https://www.pexels.com/search/gym%20and%20fitness/) website.
 
 
+#### Skeleton
+ - I used [Figma](https://www.figma.com/file/jCwcpxiv4ugqY8XK812AA8/Restaurant?node-id=0%3A1) Wireframe for website.
+
 ## Features
 
 * ### Header
@@ -120,22 +143,43 @@ The type of site structure I have chosen for my website is a hierarchical struct
 
 ### Header
 In the header the main logo of the website is on the left hand side, and the navigation links are on the right hand side on all the pages.  On medium sized devices such as tablets the logo stays on the left hand side but the navigation links hide behind the hamburger logo. 
+
+### Tablet Mobile And Desktop
+![](assets/readme-file/mobile-desktop-image.png)
+
+
 ### Home Page
 The home page has a big hero image in the back.On the image i added two buttons, one button link with menu and other one link with book a table.Under the hero image there is a section where is a history of the retaurant with a image.Under the history section there is menu section about all the foods.Under the menu section there is a form section for Email, Phone number, Address , restaurant Email and a link bar where the user can navigate to all the pages, a  google map of the restaurant location is also featured.
+
+![](assets/readme-file/home-page.png)
 ### About Page
 The about page has also big background image.Under the image one history section of restaurant with a small image.Under the history section i added a section for why choose our restaurant, in this section there are three blocks,one block is about Quality Cuisine, and the other one is about Fresh Food, and the last one is about Friendly staff.At the last, there is a our professional chefs section.In this section, there are also three blocks, each block has a chef image with their name and with their social media accounts.
+
+![](assets/readme-file/about-page.png)
 ### Menu Page
 The menu page has a section of menu about Dinner, Lunch and Breakfast.In this menu customer can see all the the detail about any food with price as well.
+
+![](assets/readme-file/menu-page.png)
 ### Your Booking Page
 In the booking page there is a section about your booking. First you have to login or register your name because without login user can't see thier booking.After login users can see their booking if they request for booking in past but if there is no any booking then this page will take them in book a table section.Users can View, Edit and Cancel their bookings.
+
+![](assets/readme-file/your-booking-page.png)
 ### Contact Page
 The contact page has a background image and under the image a big map where users can see location of the restaurant.Under the map there is a contact section, In this section users can see restaurant email, phone number and opening hours.On right side this section there is form for contact the restaurant where users can send email and their feedbacks.
+
+![](assets/readme-file/contact-page.png)
 ### Register Page
 In the register form, There is a register account section, Where users will get a nice form for register their account. Under this form i give a link for sign in if user has already a account.This form is validate if user doesn,t add valid email or name then user will see a error message on top of the form.
+
+![](assets/readme-file/register-page.png)
 ### Login Page
 In the login page, Bascally there is a section about login, If user already registerd then then he can login his account.But if user doesn't has account then i gave a link for register that's link is under the login form.When users login or registerd then they can see their name on top of the navbar.
+
+![](assets/readme-file/login-page.png)
 ### Footer
 A footer is featured on the bottom of every page on the website. The footer has a all the detail about the restaurant.In the middle has links of all the pages.On the right side has details about restaurant opening hours.At the bottom has a social media heading and the following five social media icons; Facebook, Linked in, Twitter, Instagram and skype. Each Icon is linked directly with the corresponding website.
+
+![](assets/readme-file/footer-page.png)
 
 ## Bugs
 * one bug is when user send email, Contact form shows a error (Network is unreachable) with SMTP. It is working with (backend console).I tried to find out the solution on slack, stackoverflow and on goole but i coundn't get any solution.
@@ -295,6 +339,9 @@ To deploy this project on Heroku I used followed these steps:
 
 ### Content
 * All content Ideas were taken from researching restaurant using Wikipedia.
+
+### Food Menu
+* Food images,heading and description were taken from [wasabi](https://www.wasabi.uk.com/) and [Mochi Sushi ](https://www.mochisushitx.com/)
 
 ### Code
 
